@@ -23,3 +23,32 @@ DydxV4:
     wssEndpoint: wss://indexer.dydx.trade/v4/w
   ValidatorConfig:
     restEndpoint: https://dydx-mainnet-full-rpc.public.blastapi.io
+  Twap:
+    durationSeconds: 300
+    intervalSeconds: 30
+    priceTolerancePpm: 50000
+Perpetual:
+  Network:
+    host: https://mainnet.optimism.io/
+  User:
+    slippage: 0.05
+GMX:
+  Network:
+    host: http://127.0.0.1:8545
+Hyperliquid:
+  Network:
+    host: https://api.hyperliquid-testnet.xyz
+  User:
+    slippage: 0.05
+    builderFee: 0
+Grvt:
+  Network:
+    env: testnet
+  User:
+    slippage: 0.05
+DydxV4:
+  IndexerConfig:
+    httpsEndpoint: https://indexer.dydx.trade
+    wssEndpoint: wss://indexer.dydx.trade/v4/w
+  ValidatorConfig:
+    restEndpoint: https://dydx-mainnet-full-rpc.public.blastapi.io
