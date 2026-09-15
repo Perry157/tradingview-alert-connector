@@ -19,7 +19,7 @@
 	"license": "GPL-3.0-only",
 	"dependencies": {
 		"@bluefin-exchange/bluefin-v2-client": "^5.2.35",
-		"@dydxprotocol/v4-client-js": "^1.0.27",
+		"@dydxprotocol/v4-client-js": "3.6.0",
 		"@nktkas/hyperliquid": "^0.31.0",
 		"@perp/sdk-curie": "^1.22.0",
 		"@sentry/integrations": "^6.19.1",
