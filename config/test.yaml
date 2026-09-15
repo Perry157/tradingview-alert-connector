@@ -19,3 +19,7 @@ DydxV4:
     wssEndpoint: wss://indexer.dydx.trade/v4/w
   ValidatorConfig:
     restEndpoint: https://dydx-mainnet-full-rpc.public.blastapi.io
+  Twap:
+    durationSeconds: 300
+    intervalSeconds: 30
+    priceTolerancePpm: 50000
