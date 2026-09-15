@@ -72,6 +72,26 @@ Instead of a fixed `size`, you can use:
 - `"sizeUsd": 1000` - Size in USD value (converted to base asset at current price)
 - `"sizeByLeverage": 2` - Percentage of account equity as leverage
 
+# TWAP Orders (dYdX v4)
+
+Orders sent to dYdX v4 are placed as native TWAP orders instead of market orders, so a signal's full size is broken into slices and spread out over a few minutes instead of hitting the book all at once. Each slice is priced off dYdX's live oracle price at the moment it triggers, within a configurable tolerance, rather than at one fixed price for the whole order.
+
+This is configured in `config/*.yaml` under `DydxV4.Twap`:
+
+```yaml
+DydxV4:
+  Twap:
+    durationSeconds: 300 # total time to spread the order over (5 min)
+    intervalSeconds: 30 # time between slices (10 slices)
+    priceTolerancePpm: 50000 # max price drift per slice, in ppm (50000 = 5%)
+```
+
+`durationSeconds` must be between 300 and 86400 (dYdX's protocol limits), `intervalSeconds` must be between 30 and 3600, and `intervalSeconds` must evenly divide `durationSeconds`. These settings apply to every strategy; there's currently no per-alert override.
+
+The connector responds to the TradingView webhook as soon as the TWAP order is accepted on-chain — it doesn't block the request for the full `durationSeconds` while slices fill. It then watches the order in the background and logs whether it finished `FILLED` or was cancelled/expired, so check your Render logs (or `getOrders()`) if you want to confirm how a given signal actually filled.
+
+**Security note:** `@dydxprotocol/v4-client-js` is pinned to an exact version (`3.6.0`) rather than a range. In early 2026, several published versions of this exact package (`1.0.31`, `1.15.2`, `1.22.1`, `3.4.1`) were compromised via a maintainer credential leak and shipped malware that stole seed phrases — this is the package that reads your `DYDX_V4_MNEMONIC`. Don't loosen this to a caret/range without checking dYdX's advisories first, and consider using a mnemonic dedicated to this bot rather than one holding significant funds.
+
 # Testing
 
 ```bash
