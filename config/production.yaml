@@ -25,3 +25,15 @@ DydxV4:
     restEndpoint: https://dydx-ops-rpc.kingnodes.com
     # restEndpoint: https://dydx-rest.publicnode.com
     # restEndpoint: https://dydx-mainnet-full-rpc.public.blastapi.io
+  Twap:
+    # How long (seconds) each order is spread out over. Must be 300-86400
+    # and evenly divisible by intervalSeconds. 300 = 5 minutes.
+    durationSeconds: 300
+    # How often (seconds) a new slice is triggered. Must be 30-3600.
+    # 300 / 30 = 10 slices, 30 seconds apart.
+    intervalSeconds: 30
+    # Max allowed drift (in parts-per-million) from dYdX's oracle price for
+    # each slice to fill. 50000 = 5%, matching the slippage buffer this
+    # connector used for market orders before, so slices essentially never
+    # get skipped for price.
+    priceTolerancePpm: 50000
